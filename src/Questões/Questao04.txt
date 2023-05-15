@@ -1,0 +1,42 @@
+O problema ocorre quando é necessario passar uma propriedade por diversos 
+componentes filhos e netos até que ela chegue ao componente que realmente precisa 
+utilizá-la.
+
+Isso pode tornar o código difícil de manter e as vezes confuso, aumentando 
+também a quantidade de codigo desnecessario, podendo cehgar a deixar o sistema 
+devagar ou só não funcionar 
+
+Os contextos são uma solução para isso, pois permitem compartilhar dados entre 
+componentes sem a necessidade de passar eles manualmente através da props
+
+
+Como exemplo pode se criar um contexto para escolher seu nome em um arquivo 
+de contexto:
+
+import { createContext } from "react";
+const MeuNome = createContext()
+export default MeuNome
+
+Em outro arquivo, é possível pegar o contexto e colcoar esse nome:
+const Tela1 = () => {
+
+    return (
+        <MeuNome.Provider value={{nome:"Francisco"}}>
+            <div>
+                <h1>{nome}</h1>
+
+            </div>
+        </MeuNome.Provider>
+
+    )
+A partir desse ponto, posso fazer componentes e simplesmente utilizar:
+
+function Header() {
+  const nome = useContext(UserContext);
+  
+  return (
+    <header>
+      <h1>Welcome, {nome}!</h1>
+    </header>
+  );
+}
